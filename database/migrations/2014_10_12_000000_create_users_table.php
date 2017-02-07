@@ -14,13 +14,19 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            //$table->increments('id');
+            $table->uuid('uuid');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
+            $table->primary('uuid');
             $table->timestamps();
+
         });
+
+//        DB::statement('ALTER TABLE users ADD uuid BINARY(16) NOT NULL AFTER id;');
+//        DB::statement('CREATE UNIQUE INDEX users_uuid_unique ON users (uuid);');
     }
 
     /**
@@ -31,5 +37,6 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+
     }
 }
